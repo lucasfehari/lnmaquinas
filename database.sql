@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(255) NOT NULL,
+  `category` VARCHAR(50) NOT NULL,
+  `price` DECIMAL(10, 2) NOT NULL,
+  `description` TEXT,
+  `image_url` VARCHAR(500),
+  `in_stock` TINYINT(1) DEFAULT 1,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `banners` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(255),
+  `subtitle` VARCHAR(255),
+  `text` TEXT,
+  `cta_text` VARCHAR(50),
+  `link_url` VARCHAR(255),
+  `image_url` VARCHAR(500) NOT NULL,
+  `order_index` INT DEFAULT 0,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
