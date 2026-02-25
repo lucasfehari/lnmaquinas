@@ -20,6 +20,7 @@ const Products: React.FC = () => {
   }, [searchParams]);
 
   const filteredProducts = useMemo(() => {
+    if (!Array.isArray(products)) return [];
     return products.filter(product => {
       const matchesCategory = activeCategory === 'Todos' || product.category === activeCategory;
       const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -66,8 +67,8 @@ const Products: React.FC = () => {
                 <button
                   onClick={() => setActiveCategory('Todos')}
                   className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors flex justify-between items-center ${activeCategory === 'Todos'
-                      ? 'bg-brand-green text-white font-medium'
-                      : 'text-gray-600 hover:bg-gray-50'
+                    ? 'bg-brand-green text-white font-medium'
+                    : 'text-gray-600 hover:bg-gray-50'
                     }`}
                 >
                   Todos os Produtos
@@ -78,8 +79,8 @@ const Products: React.FC = () => {
                     key={category.id}
                     onClick={() => setActiveCategory(category.name)}
                     className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors flex justify-between items-center ${activeCategory === category.name
-                        ? 'bg-brand-green text-white font-medium'
-                        : 'text-gray-600 hover:bg-gray-50'
+                      ? 'bg-brand-green text-white font-medium'
+                      : 'text-gray-600 hover:bg-gray-50'
                       }`}
                   >
                     {category.name}

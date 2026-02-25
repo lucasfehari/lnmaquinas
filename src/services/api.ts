@@ -16,7 +16,8 @@ export const api = {
 
         const response = await fetch(`${API_BASE_URL}/products.php`);
         if (!response.ok) throw new Error('Failed to fetch products');
-        return response.json();
+        const data = await response.json();
+        return Array.isArray(data) ? data : [];
     },
 
     addProduct: async (product: Omit<Product, 'id'>): Promise<Product> => {
@@ -78,14 +79,28 @@ export const api = {
                         method: 'POST',
                         body: JSON.stringify({ image: base64, name: file.name }),
                     });
+
+                    if (!response.ok) {
+                        try {
+                            const errorData = await response.json();
+                            reject(new Error(errorData.message || `HTTP Error ${response.status}`));
+                        } catch {
+                            reject(new Error(`HTTP Error ${response.status}`));
+                        }
+                        return;
+                    }
+
                     const data = await response.json();
-                    if (data.url) resolve(data.url);
-                    else reject('Upload failed');
+                    if (data.url) {
+                        resolve(data.url);
+                    } else {
+                        reject(new Error(data.message || data.error || 'Upload failed: Sem URL e sem mensagem de erro.'));
+                    }
                 } catch (e) {
-                    reject(e);
+                    reject(e instanceof Error ? e : new Error(String(e)));
                 }
             };
-            reader.onerror = (error) => reject(error);
+            reader.onerror = (error) => reject(new Error('Falha ao ler o arquivo localmente'));
         });
     },
 
@@ -98,7 +113,8 @@ export const api = {
         }
         const response = await fetch(`${API_BASE_URL}/banners.php`);
         if (!response.ok) throw new Error('Failed to fetch banners');
-        return response.json();
+        const data = await response.json();
+        return Array.isArray(data) ? data : [];
     },
 
     addBanner: async (banner: Omit<Slide, 'id'>): Promise<Slide> => {
@@ -137,7 +153,8 @@ export const api = {
         if (USE_MOCK_DATA) return [];
         const response = await fetch(`${API_BASE_URL}/categories.php`);
         if (!response.ok) throw new Error('Failed to fetch categories');
-        return response.json();
+        const data = await response.json();
+        return Array.isArray(data) ? data : [];
     },
 
     addCategory: async (category: Omit<Category, 'id'>): Promise<Category> => {

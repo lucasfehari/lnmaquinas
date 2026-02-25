@@ -13,17 +13,17 @@ const AdminProducts: React.FC = () => {
     }
   };
 
-  const filteredProducts = products.filter(p => 
-    p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+  const filteredProducts = Array.isArray(products) ? products.filter(p =>
+    p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     p.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  ) : [];
 
   return (
     <div>
       <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
         <h1 className="text-2xl font-heading font-bold text-gray-800">Gerenciar Produtos</h1>
-        <Link 
-          to="/admin/produtos/novo" 
+        <Link
+          to="/admin/produtos/novo"
           className="bg-brand-green text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-brand-darkGreen transition-colors shadow-sm"
         >
           <Plus className="h-4 w-4" /> Novo Produto
@@ -62,9 +62,9 @@ const AdminProducts: React.FC = () => {
               {filteredProducts.map((product) => (
                 <tr key={product.id} className="hover:bg-gray-50 transition-colors">
                   <td className="p-4">
-                    <img 
-                      src={product.imageUrl} 
-                      alt={product.name} 
+                    <img
+                      src={product.imageUrl}
+                      alt={product.name}
                       className="w-12 h-12 rounded-lg object-cover bg-gray-100 border border-gray-200"
                     />
                   </td>
@@ -87,14 +87,14 @@ const AdminProducts: React.FC = () => {
                     )}
                   </td>
                   <td className="p-4 text-right space-x-2">
-                    <Link 
+                    <Link
                       to={`/admin/produtos/${product.id}`}
                       className="inline-block p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                       title="Editar"
                     >
                       <Edit className="h-4 w-4" />
                     </Link>
-                    <button 
+                    <button
                       onClick={() => handleDelete(product.id)}
                       className="inline-block p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                       title="Excluir"

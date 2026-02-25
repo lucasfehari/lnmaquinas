@@ -19,6 +19,25 @@ export const CONTACT_INFO: ContactInfo = {
   }
 };
 
+export const UNIDADES = [
+  {
+    name: "Unidade Jataí – GO",
+    company: "LN Máquinas e Peças Agrícolas LTDA",
+    address: "Rua Jerônimo Vilela, nº 156 - Bairro Jardim América - Jataí – GO",
+    phone: "(64) 3636-4067",
+    whatsapp: "(64) 99658-1267",
+    instagram: "@lnmaquinas"
+  },
+  {
+    name: "Unidade Iporá – GO",
+    company: "LN Máquinas e Peças Agrícolas – Unidade Iporá",
+    address: "Av. Pará, 2461 - Jardim Monte Alto - Iporá – GO, CEP: 76200-000",
+    phone: "(64) 99988-7180",
+    whatsapp: "(64) 99988-7180",
+    instagram: "@lnmaquinasipora"
+  }
+];
+
 import { Tractor, GearSix, Wrench, Drone } from '@phosphor-icons/react';
 
 export const SERVICES: ServiceItem[] = [

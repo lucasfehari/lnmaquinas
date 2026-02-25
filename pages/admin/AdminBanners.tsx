@@ -85,16 +85,31 @@ const AdminBanners: React.FC = () => {
         </button>
       </div>
 
-      <div className="bg-blue-50 border border-blue-100 p-4 rounded-lg mb-8 flex items-start gap-3">
-        <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5" />
-        <div>
-          <h4 className="font-bold text-blue-800 text-sm">Tamanho Recomendado</h4>
-          <p className="text-sm text-blue-600">
-            Para melhor visualização em desktops, utilize imagens com <strong>1920x600 pixels</strong>.
-            O sistema ajustará automaticamente para telas menores.
-          </p>
-          <p className="text-xs text-blue-500 mt-1">
-            * Se não preencher título ou texto, o banner será exibido como <strong>"Somente Imagem"</strong> (sem sombra nem botões).
+      <div className="bg-blue-50 border border-blue-200 p-5 rounded-xl mb-8 flex items-start gap-4 shadow-sm">
+        <AlertCircle className="h-6 w-6 text-blue-600 mt-1 flex-shrink-0" />
+        <div className="space-y-3">
+          <h4 className="font-bold text-blue-800 text-lg border-b border-blue-200/50 pb-2">Orientações para o Design do Banner</h4>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-900">
+            <div className="bg-white/60 p-3 rounded-lg border border-blue-100">
+              <span className="font-bold flex items-center gap-2 mb-1">🖥️ Para Computadores (Desktop)</span>
+              A imagem ideal deve ter <strong className="text-brand-green">1920x600 pixels</strong> (formato bem largo e esticado).
+            </div>
+            <div className="bg-white/60 p-3 rounded-lg border border-blue-100">
+              <span className="font-bold flex items-center gap-2 mb-1">📱 Para Celulares (Mobile)</span>
+              O sistema fará um corte focando no <strong className="text-brand-green">centro</strong> da imagem.
+            </div>
+          </div>
+
+          <div className="bg-blue-100 p-3 rounded-lg text-sm text-blue-900 border border-blue-200">
+            <strong>⚠️ Respiro Importante (Safe Zone):</strong> Nunca coloque textos essenciais ou a máquina
+            muito nas pontas (bordas direita e esquerda). Mantenha o conteúdo principal (trator, peças, logo)
+            sempre <strong>centralizado</strong>, deixando um "respiro" generoso nas laterais. Assim, quando
+            alguém abrir no celular, a máquina continuará perfeitamente visível.
+          </div>
+
+          <p className="text-xs text-blue-600/80 mt-2 font-medium">
+            * Se você não preencher o título ou o texto nos campos abaixo, o banner será exibido como <strong>"Somente Imagem"</strong> (sem aquela camada escura por cima).
           </p>
         </div>
       </div>
@@ -170,7 +185,7 @@ const AdminBanners: React.FC = () => {
       )}
 
       <div className="space-y-8">
-        {banners.map((banner, index) => (
+        {Array.isArray(banners) && banners.map((banner, index) => (
           <div key={banner.id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden group">
             <div className="bg-gray-50 p-4 border-b border-gray-200 flex justify-between items-center">
               <span className="font-bold text-gray-700">Slide #{index + 1}</span>

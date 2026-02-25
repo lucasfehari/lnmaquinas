@@ -26,23 +26,29 @@ const HeroCarousel = () => {
   if (banners.length === 0) return null;
 
   return (
-    <div className="relative h-[500px] md:h-[600px] w-full overflow-hidden bg-brand-dark">
+    <div className="relative h-[400px] sm:h-[500px] xl:h-[650px] w-full bg-brand-dark flex items-center justify-center overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.7 }}
-          className="absolute inset-0"
+          transition={{ duration: 0.5 }}
+          className="absolute inset-0 w-full h-full"
         >
-          <div className={`absolute inset-0 z-10 ${banners[current].title ? 'bg-black/40' : ''}`} />
-          <div className={`absolute inset-0 z-10 ${banners[current].title ? 'bg-gradient-to-t from-brand-dark/90 via-transparent to-transparent' : ''}`} />
-          <img
-            src={banners[current].image}
-            alt="Banner"
-            className="w-full h-full object-cover object-center"
-          />
+          <div className={`absolute inset-0 z-10 ${banners[current].title ? 'bg-black/30 md:bg-black/20' : ''}`} />
+          <div className={`absolute inset-0 z-10 ${banners[current].title ? 'bg-gradient-to-t from-brand-dark/90 via-transparent to-transparent md:bg-gradient-to-r md:from-brand-dark/80' : ''}`} />
+          <picture className="w-full h-full block">
+            <img
+              src={banners[current].image}
+              alt={banners[current].title || "Banner Principal"}
+              className="w-full h-full object-cover object-[center_top] sm:object-center"
+              style={{
+                // Prevent extreme cropping by ensuring the focal point (usually the machinery) stays in frame
+                objectPosition: 'calc(50%) 20%'
+              }}
+            />
+          </picture>
 
           {(banners[current].title || banners[current].subtitle || banners[current].cta) && (
             <div className="absolute inset-0 z-20 flex items-center justify-center md:justify-start">
@@ -279,7 +285,7 @@ const CategoryGrid = () => {
 const Home: React.FC = () => {
   const { products } = useStore();
   // Use a slice of products for the showcase (using Store data)
-  const featuredProducts = products.slice(0, 4);
+  const featuredProducts = Array.isArray(products) ? products.slice(0, 4) : [];
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">

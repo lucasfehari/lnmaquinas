@@ -47,7 +47,7 @@ const AdminCategories: React.FC = () => {
 
             {/* Categories List */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {categories.map((category) => (
+                {Array.isArray(categories) && categories.map((category) => (
                     <div key={category.id} className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex justify-between items-center group hover:border-brand-green transition-colors">
                         <div className="flex items-center gap-3">
                             <div className="p-2 bg-gray-100 rounded-lg text-gray-500 group-hover:bg-brand-green/10 group-hover:text-brand-green transition-colors">
@@ -68,7 +68,7 @@ const AdminCategories: React.FC = () => {
                     </div>
                 ))}
 
-                {categories.length === 0 && (
+                {(!Array.isArray(categories) || categories.length === 0) && (
                     <div className="col-span-full py-12 text-center text-gray-400 bg-gray-50 rounded-xl border-dashed border-2 border-gray-200">
                         Nenhuma categoria cadastrada.
                     </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, MapPin, Phone, Mail, Tractor, Search, ChevronDown, Instagram, Facebook, Linkedin, Clock } from 'lucide-react';
 import { useStore } from '../store';
-import { CONTACT_INFO, COMPANY_NAME } from '../constants';
+import { CONTACT_INFO, COMPANY_NAME, UNIDADES } from '../constants';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../src/logo/logo.png';
 
@@ -44,7 +44,7 @@ export const Navbar: React.FC = () => {
             <span className="flex items-center gap-2 opacity-90 hover:opacity-100"><Clock className="h-3 w-3 text-brand-yellow" /> Seg-Sex: 08h às 18h</span>
           </div>
           <div className="flex items-center space-x-4">
-            <a href="#" className="hover:text-brand-yellow transition-colors"><Instagram className="h-4 w-4" /></a>
+            <a href={`https://instagram.com/${CONTACT_INFO.social.instagram.replace('@', '')}`} target="_blank" rel="noreferrer" className="hover:text-brand-yellow transition-colors"><Instagram className="h-4 w-4" /></a>
             <a href="#" className="hover:text-brand-yellow transition-colors"><Facebook className="h-4 w-4" /></a>
             <a href="#" className="hover:text-brand-yellow transition-colors"><Linkedin className="h-4 w-4" /></a>
           </div>
@@ -203,7 +203,7 @@ export const Footer: React.FC = () => {
               Tecnologia, confiança e desempenho para aumentar a produtividade da sua lavoura. Referência em Jataí e região.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="bg-gray-800 p-2 rounded-full text-gray-400 hover:bg-brand-green hover:text-white transition-all"><Instagram className="h-5 w-5" /></a>
+              <a href={`https://instagram.com/${CONTACT_INFO.social.instagram.replace('@', '')}`} target="_blank" rel="noreferrer" className="bg-gray-800 p-2 rounded-full text-gray-400 hover:bg-brand-green hover:text-white transition-all"><Instagram className="h-5 w-5" /></a>
               <a href="#" className="bg-gray-800 p-2 rounded-full text-gray-400 hover:bg-brand-green hover:text-white transition-all"><Facebook className="h-5 w-5" /></a>
               <a href="#" className="bg-gray-800 p-2 rounded-full text-gray-400 hover:bg-brand-green hover:text-white transition-all"><Linkedin className="h-5 w-5" /></a>
             </div>
@@ -221,23 +221,36 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Contact 1 */}
+          {/* Unidades */}
           <div>
-            <h3 className="font-heading font-semibold text-lg mb-6 text-white border-l-4 border-brand-yellow pl-3">Contato</h3>
-            <ul className="space-y-4 text-sm text-gray-400">
-              <li className="flex items-start gap-3 group">
-                <MapPin className="h-5 w-5 text-brand-green flex-shrink-0 mt-0.5 group-hover:text-brand-yellow transition-colors" />
-                <span className="group-hover:text-gray-300 transition-colors">{CONTACT_INFO.address}</span>
-              </li>
-              <li className="flex items-center gap-3 group">
-                <Phone className="h-5 w-5 text-brand-green flex-shrink-0 group-hover:text-brand-yellow transition-colors" />
-                <span className="group-hover:text-gray-300 transition-colors">{CONTACT_INFO.phone}</span>
-              </li>
-              <li className="flex items-center gap-3 group">
-                <Mail className="h-5 w-5 text-brand-green flex-shrink-0 group-hover:text-brand-yellow transition-colors" />
-                <span className="group-hover:text-gray-300 transition-colors">{CONTACT_INFO.emails.commercial}</span>
-              </li>
-            </ul>
+            <h3 className="font-heading font-semibold text-lg mb-6 text-white border-l-4 border-brand-yellow pl-3">Nossas Unidades</h3>
+            <div className="space-y-6">
+              {UNIDADES.map((unidade, idx) => (
+                <div key={idx}>
+                  <h4 className="text-brand-yellow text-sm font-bold mb-2">{unidade.name}</h4>
+                  <ul className="space-y-2 text-sm text-gray-400">
+                    <li className="flex items-start gap-3 group">
+                      <MapPin className="h-4 w-4 text-brand-green flex-shrink-0 mt-0.5" />
+                      <span className="text-xs group-hover:text-gray-300 transition-colors">{unidade.address}</span>
+                    </li>
+                    <li className="flex items-center gap-3 group">
+                      <Phone className="h-4 w-4 text-brand-green flex-shrink-0" />
+                      <a href={`https://wa.me/55${unidade.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noreferrer" className="text-xs group-hover:text-white transition-colors">
+                        {unidade.phone}
+                      </a>
+                    </li>
+                    {unidade.instagram && (
+                      <li className="flex items-center gap-3 group">
+                        <Instagram className="h-4 w-4 text-brand-green flex-shrink-0" />
+                        <a href={`https://instagram.com/${unidade.instagram.replace('@', '')}`} target="_blank" rel="noreferrer" className="text-xs group-hover:text-white transition-colors">
+                          {unidade.instagram}
+                        </a>
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Contact 2 */}

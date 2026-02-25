@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Mail, Phone, MapPin, Clock, MessageSquare } from 'lucide-react';
 import { Section } from '../components/Layout';
-import { CONTACT_INFO } from '../constants';
+import { CONTACT_INFO, UNIDADES } from '../constants';
 
 type FormData = {
   name: string;
@@ -50,49 +50,62 @@ const Contact: React.FC = () => {
             {/* Contact Info Card */}
             <div className="lg:col-span-1 space-y-6">
               <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 h-full">
-                <h3 className="text-xl font-heading font-bold text-gray-900 mb-6">Informações de Contato</h3>
+                <h3 className="text-xl font-heading font-bold text-gray-900 mb-6">Nossas Unidades</h3>
 
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-brand-green/10 p-3 rounded-lg text-brand-green">
-                      <MapPin className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 text-sm">Endereço</h4>
-                      <p className="text-gray-600 text-sm mt-1">{CONTACT_INFO.address}</p>
-                    </div>
-                  </div>
+                <div className="space-y-8">
+                  {UNIDADES.map((unidade, idx) => (
+                    <div key={idx} className="space-y-4">
+                      <h4 className="font-bold text-brand-green text-lg border-b border-gray-100 pb-2 flex items-center gap-2">
+                        <MapPin className="h-5 w-5" />
+                        {unidade.name}
+                      </h4>
 
-                  <div className="flex items-start gap-4">
-                    <div className="bg-brand-green/10 p-3 rounded-lg text-brand-green">
-                      <Phone className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 text-sm">Telefones</h4>
-                      <p className="text-gray-600 text-sm mt-1">Fixo: {CONTACT_INFO.phone}</p>
-                      <p className="text-gray-600 text-sm">Comercial: {CONTACT_INFO.whatsapp.commercial}</p>
-                    </div>
-                  </div>
+                      <div className="pl-7 space-y-3">
+                        <div>
+                          <p className="text-gray-900 font-medium text-sm">{unidade.company}</p>
+                          <p className="text-gray-600 text-sm mt-1">{unidade.address}</p>
+                        </div>
 
-                  <div className="flex items-start gap-4">
-                    <div className="bg-brand-green/10 p-3 rounded-lg text-brand-green">
-                      <Mail className="h-6 w-6" />
+                        <div className="flex flex-col gap-1">
+                          <p className="text-gray-600 text-sm flex items-center gap-2">
+                            <Phone className="h-4 w-4 text-gray-400" /> Fixo: {unidade.phone}
+                          </p>
+                          <p className="text-gray-600 text-sm flex items-center gap-2">
+                            <MessageSquare className="h-4 w-4 text-gray-400" /> WhatsApp:
+                            <a href={`https://wa.me/55${unidade.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noreferrer" className="hover:text-brand-green transition-colors">{unidade.whatsapp}</a>
+                          </p>
+                          <p className="text-gray-600 text-sm flex items-center gap-2">
+                            <span className="font-bold text-gray-400">@</span> Insta:
+                            <a href={`https://instagram.com/${unidade.instagram.replace('@', '')}`} target="_blank" rel="noreferrer" className="hover:text-brand-green transition-colors">{unidade.instagram}</a>
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 text-sm">Emails</h4>
-                      <p className="text-gray-600 text-xs mt-1 break-all">{CONTACT_INFO.emails.commercial}</p>
-                      <p className="text-gray-600 text-xs break-all">{CONTACT_INFO.emails.financial}</p>
-                    </div>
-                  </div>
+                  ))}
 
-                  <div className="flex items-start gap-4">
-                    <div className="bg-brand-green/10 p-3 rounded-lg text-brand-green">
-                      <Clock className="h-6 w-6" />
+                  <div className="pt-6 border-t border-gray-100 space-y-6">
+                    <h4 className="font-bold text-gray-900 text-sm">Geral</h4>
+
+                    <div className="flex items-start gap-4">
+                      <div className="bg-brand-green/10 p-3 rounded-lg text-brand-green">
+                        <Mail className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-gray-900 text-sm">Emails</h4>
+                        <p className="text-gray-600 text-xs mt-1 break-all">{CONTACT_INFO.emails.commercial}</p>
+                        <p className="text-gray-600 text-xs break-all">{CONTACT_INFO.emails.financial}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-gray-900 text-sm">Horário de Funcionamento</h4>
-                      <p className="text-gray-600 text-sm mt-1">Seg - Sex: 08:00 - 18:00</p>
-                      <p className="text-gray-600 text-sm">Sábado: 08:00 - 12:00</p>
+
+                    <div className="flex items-start gap-4">
+                      <div className="bg-brand-green/10 p-3 rounded-lg text-brand-green">
+                        <Clock className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-gray-900 text-sm">Horário de Funcionamento</h4>
+                        <p className="text-gray-600 text-sm mt-1">Seg - Sex: 08:00 - 18:00</p>
+                        <p className="text-gray-600 text-sm">Sábado: 08:00 - 12:00</p>
+                      </div>
                     </div>
                   </div>
                 </div>
