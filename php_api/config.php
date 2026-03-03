@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 $host = "localhost";
 $db_name = "jhona447_lnmaquinas";
 
-$username = "lucasfehari";
+$username = "jhona447_lucasfehari";
 $password = "Lucasandrade13+";
 
 try {

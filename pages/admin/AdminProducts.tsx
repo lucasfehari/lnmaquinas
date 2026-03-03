@@ -73,7 +73,9 @@ const AdminProducts: React.FC = () => {
                     <span className="bg-gray-100 px-2 py-1 rounded text-xs font-bold">{product.category}</span>
                   </td>
                   <td className="p-4 text-gray-700">
-                    {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)}
+                    {product.price > 0
+                      ? new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)
+                      : <span className="text-gray-500 italic">Sob Consulta</span>}
                   </td>
                   <td className="p-4">
                     {product.inStock ? (

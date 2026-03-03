@@ -76,6 +76,7 @@ export const useStore = create<AppState>()(
           }));
         } catch (error) {
           set({ error: 'Erro ao criar produto', isLoading: false });
+          throw error;
         }
       },
       updateProduct: async (id, updatedProduct) => {
@@ -88,6 +89,7 @@ export const useStore = create<AppState>()(
           }));
         } catch (error) {
           set({ error: 'Erro ao atualizar produto', isLoading: false });
+          throw error;
         }
       },
       deleteProduct: async (id) => {

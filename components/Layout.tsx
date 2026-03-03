@@ -257,18 +257,24 @@ export const Footer: React.FC = () => {
           <div>
             <h3 className="font-heading font-semibold text-lg mb-6 text-white border-l-4 border-brand-yellow pl-3">Atendimento</h3>
             <div className="bg-gray-800/50 p-4 rounded-xl border border-gray-700">
-              <ul className="space-y-2 text-sm text-gray-400 mb-4">
-                <li className="flex justify-between"><span>Seg - Sex:</span> <span className="text-white">08:00 - 18:00</span></li>
-                <li className="flex justify-between"><span>Sábado:</span> <span className="text-white">08:00 - 12:00</span></li>
-                <li className="flex justify-between"><span>Domingo:</span> <span className="text-red-400">Fechado</span></li>
+              <ul className="space-y-4 text-sm">
+                <li className="flex flex-col">
+                  <span className="text-gray-400 text-[11px] uppercase tracking-wider mb-1 font-bold">Peças</span>
+                  <a href="https://wa.me/5564996581267" target="_blank" rel="noreferrer" className="flex items-center text-white hover:text-brand-yellow transition-colors gap-2"><Phone className="h-4 w-4 text-brand-green" /> (64) 99658-1267</a>
+                </li>
+                <li className="flex flex-col">
+                  <span className="text-gray-400 text-[11px] uppercase tracking-wider mb-1 font-bold">Máquinas e Implementos</span>
+                  <a href="https://wa.me/5564999970488" target="_blank" rel="noreferrer" className="flex items-center text-white hover:text-brand-yellow transition-colors gap-2"><Phone className="h-4 w-4 text-brand-green" /> (64) 99997-0488</a>
+                </li>
+                <li className="flex flex-col">
+                  <span className="text-gray-400 text-[11px] uppercase tracking-wider mb-1 font-bold">Financeiro</span>
+                  <a href="https://wa.me/5564996082781" target="_blank" rel="noreferrer" className="flex items-center text-white hover:text-brand-yellow transition-colors gap-2"><Phone className="h-4 w-4 text-brand-green" /> (64) 99608-2781</a>
+                </li>
+                <li className="flex flex-col">
+                  <span className="text-gray-400 text-[11px] uppercase tracking-wider mb-1 font-bold">Plantão</span>
+                  <a href="https://wa.me/5564984106409" target="_blank" rel="noreferrer" className="flex items-center text-white hover:text-brand-yellow transition-colors gap-2"><Phone className="h-4 w-4 text-brand-green" /> (64) 98410-6409</a>
+                </li>
               </ul>
-              <a
-                href={`https://wa.me/55${CONTACT_INFO.whatsapp.commercial.replace(/\D/g, '')}`}
-                className="flex items-center justify-center gap-2 bg-brand-green hover:bg-brand-yellow hover:text-brand-dark text-white text-sm font-bold py-3 rounded-lg transition-all w-full"
-              >
-                <Phone className="h-4 w-4" />
-                (64) 99658-1267
-              </a>
             </div>
           </div>
         </div>

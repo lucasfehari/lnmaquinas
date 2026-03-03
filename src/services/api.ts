@@ -30,9 +30,13 @@ export const api = {
 
         const response = await fetch(`${API_BASE_URL}/products.php`, {
             method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(product),
         });
-        if (!response.ok) throw new Error('Failed to add product');
+        if (!response.ok) {
+            const errText = await response.text();
+            throw new Error(errText || 'Failed to add product');
+        }
         const res = await response.json();
         return { ...product, id: res.id.toString() };
     },
@@ -42,10 +46,15 @@ export const api = {
             return new Promise(resolve => setTimeout(resolve, 500));
         }
 
-        await fetch(`${API_BASE_URL}/products.php?id=${id}`, {
+        const response = await fetch(`${API_BASE_URL}/products.php?id=${id}`, {
             method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(product),
         });
+        if (!response.ok) {
+            const errText = await response.text();
+            throw new Error(errText || 'Failed to update product');
+        }
     },
 
     deleteProduct: async (id: string): Promise<void> => {

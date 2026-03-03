@@ -50,22 +50,30 @@ const ProductForm: React.FC = () => {
     }
   }, [id, isEditMode, products, setValue, navigate]);
 
-  const onSubmit = (data: Product) => {
-    // Ensure price is a number
-    data.price = Number(data.price);
+  const onSubmit = async (data: Product) => {
+    try {
+      // ESTRATÉGIA: o servidor PHP antigo usa !empty(price) que bloqueia 0.
+      // Se price é 0 (sem valor), enviamos -1 ao servidor (passa o !empty).
+      // No frontend, -1 significa "Sob Consulta".
+      const rawPrice = Number(data.price);
+      data.price = (!rawPrice || rawPrice <= 0) ? -1 : rawPrice;
 
-    if (isEditMode && id) {
-      updateProduct(id, data);
-      alert('Produto atualizado com sucesso!');
-    } else {
-      const newProduct = {
-        ...data,
-        id: Date.now().toString(), // Simple ID generation
-      };
-      addProduct(newProduct);
-      alert('Produto criado com sucesso!');
+      if (isEditMode && id) {
+        await updateProduct(id, data);
+        alert('Produto atualizado com sucesso!');
+      } else {
+        const newProduct = {
+          ...data,
+          id: Date.now().toString(), // Simple ID generation - just a placeholder, backend does auto-increment
+        };
+        await addProduct(newProduct);
+        alert('Produto criado com sucesso!');
+      }
+      navigate('/admin/produtos');
+    } catch (error) {
+      console.error(error);
+      alert('Ocorreu um erro ao salvar o produto no servidor. Verifique os dados e tente novamente.');
     }
-    navigate('/admin/produtos');
   };
 
   return (
@@ -110,10 +118,11 @@ const ProductForm: React.FC = () => {
               <input
                 type="number"
                 step="0.01"
-                {...register('price', { required: 'Preço é obrigatório', min: 0 })}
+                {...register('price', { min: 0 })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-green focus:outline-none"
-                placeholder="0.00"
+                placeholder="0.00 (Deixe 0 ou em branco para Sob Consulta)"
               />
+              <p className="text-xs text-gray-500 mt-1">Deixe em branco ou 0 para exibir "Sob Consulta"</p>
             </div>
 
             <div>

@@ -46,9 +46,13 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
 
         <div className="mt-auto pt-4 border-t border-gray-50 flex flex-col gap-3">
           <div className="flex flex-col">
-            <span className="text-xs text-gray-400 font-medium">Preço Estimado</span>
-            <span className="text-xl font-bold text-brand-darkGreen">
-              {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)}
+            <span className="text-xs text-gray-400 font-medium">
+              {product.price > 0 ? 'Preço Estimado' : 'Valor'}
+            </span>
+            <span className={"font-bold text-brand-darkGreen " + (product.price > 0 ? "text-xl" : "text-lg")}>
+              {product.price > 0
+                ? new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)
+                : 'Sob Consulta'}
             </span>
           </div>
           <a
@@ -61,7 +65,9 @@ export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
               }`}
           >
             <WhatsappLogo className="h-5 w-5" weight="bold" />
-            {product.inStock ? 'Tenho Interesse' : 'Indisponível'}
+            {!product.inStock
+              ? 'Indisponível'
+              : (product.price > 0 ? 'Tenho Interesse' : 'Solicitar Orçamento')}
           </a>
         </div>
       </div>
