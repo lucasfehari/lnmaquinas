@@ -5,7 +5,7 @@ import { MOCK_PRODUCTS } from '../../constants';
 // Or use environment variable VITE_USE_MOCK="true"
 const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK === 'true'; // Default to FALSE (Real Backend)
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost/ln_maquinas/php_api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost/ln_maquinas/php_api' : '/php_api');
 
 export const api = {
     getProducts: async (): Promise<Product[]> => {

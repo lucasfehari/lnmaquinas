@@ -5,7 +5,7 @@ import { Product } from '../types';
 import { CONTACT_INFO } from '../constants';
 
 export const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
-  const whatsappNumber = CONTACT_INFO.whatsapp.commercial.replace(/\D/g, '');
+  const whatsappNumber = "5564984106409";
   const message = encodeURIComponent(`Olá, tenho interesse no produto: ${product.name}`);
   const whatsappLink = `https://wa.me/55${whatsappNumber}?text=${message}`;
 
