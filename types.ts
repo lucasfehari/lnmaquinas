@@ -56,3 +56,18 @@ export interface ContactInfo {
     instagram: string;
   };
 }
+
+export interface Partner {
+  id: number;
+  name: string;
+  image_url: string;
+  order_index?: number;
+}
+
+export interface SEOSettings {
+  id?: number;
+  page: string;
+  title: string;
+  description: string;
+  keywords: string;
+}

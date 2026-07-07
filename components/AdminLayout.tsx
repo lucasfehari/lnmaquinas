@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useStore } from '../store';
-import { LayoutDashboard, Package, Images, LogOut, Tractor, Home as HomeIcon, Tag } from 'lucide-react';
+import { LayoutDashboard, Package, Images, LogOut, Tractor, Home as HomeIcon, Tag, Users, Search } from 'lucide-react';
 
 export const AdminLayout: React.FC = () => {
   const { logout } = useStore();
@@ -56,6 +56,22 @@ export const AdminLayout: React.FC = () => {
           >
             <Images className="h-5 w-5" />
             Banners Home
+          </Link>
+          <Link
+            to="/admin/partners"
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive('/admin/partners') ? 'bg-brand-green text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+              }`}
+          >
+            <Users className="h-5 w-5" />
+            Parceiros
+          </Link>
+          <Link
+            to="/admin/seo"
+            className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive('/admin/seo') ? 'bg-brand-green text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+              }`}
+          >
+            <Search className="h-5 w-5" />
+            SEO Global
           </Link>
         </nav>
 

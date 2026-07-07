@@ -12,8 +12,10 @@ const AdminLogin: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simple mock authentication
-    if (user === import.meta.env.VITE_ADMIN_USER && pass === import.meta.env.VITE_ADMIN_PASS) {
+    const validUser = import.meta.env.VITE_ADMIN_USER || 'admin';
+    const validPass = import.meta.env.VITE_ADMIN_PASS || 'admin';
+
+    if (user === validUser && pass === validPass) {
       login();
       navigate('/admin');
     } else {

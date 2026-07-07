@@ -1,12 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Section } from '../components/Layout';
+import { SEO } from '../components/SEO';
 import { ABOUT_TEXT, COMPANY_NAME } from '../constants';
 import { ShieldCheck, TrendingUp, Users } from 'lucide-react';
 
 const About: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
+      <SEO page="about" />
       {/* Header */}
       <div className="bg-brand-darkGreen py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

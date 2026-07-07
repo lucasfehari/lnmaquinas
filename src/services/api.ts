@@ -1,4 +1,4 @@
-import { Product, Slide, Category } from '../../types';
+import { Product, Slide, Category, Partner, SEOSettings } from '../../types';
 import { MOCK_PRODUCTS } from '../../constants';
 
 // Toggle this to false to test the Real API even locally (requires CORS on server)
@@ -182,5 +182,52 @@ export const api = {
         await fetch(`${API_BASE_URL}/categories.php?id=${id}`, {
             method: 'DELETE',
         });
+    },
+
+    // Partners
+    getPartners: async (): Promise<Partner[]> => {
+        if (USE_MOCK_DATA) return [];
+        const response = await fetch(`${API_BASE_URL}/partners.php`);
+        if (!response.ok) throw new Error('Failed to fetch partners');
+        const data = await response.json();
+        return Array.isArray(data) ? data : [];
+    },
+
+    addPartner: async (partner: Omit<Partner, 'id'>): Promise<Partner> => {
+        if (USE_MOCK_DATA) return { ...partner, id: Math.random() };
+        const response = await fetch(`${API_BASE_URL}/partners.php`, {
+            method: 'POST',
+            body: JSON.stringify(partner),
+        });
+        if (!response.ok) throw new Error('Failed to add partner');
+        return await response.json();
+    },
+
+    deletePartner: async (id: number): Promise<void> => {
+        if (USE_MOCK_DATA) return;
+        await fetch(`${API_BASE_URL}/partners.php?id=${id}`, {
+            method: 'DELETE',
+        });
+    },
+
+    // SEO
+    getSEO: async (page?: string): Promise<SEOSettings | SEOSettings[]> => {
+        if (USE_MOCK_DATA) return [];
+        const url = page ? `${API_BASE_URL}/seo.php?page=${page}` : `${API_BASE_URL}/seo.php`;
+        const response = await fetch(url);
+        if (!response.ok) {
+            if (response.status === 404) return []; // Fallback for no data
+            throw new Error('Failed to fetch SEO');
+        }
+        return await response.json();
+    },
+
+    updateSEO: async (seo: SEOSettings): Promise<void> => {
+        if (USE_MOCK_DATA) return;
+        const response = await fetch(`${API_BASE_URL}/seo.php`, {
+            method: 'POST',
+            body: JSON.stringify(seo),
+        });
+        if (!response.ok) throw new Error('Failed to update SEO');
     }
 };

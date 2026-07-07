@@ -17,6 +17,8 @@ import AdminProducts from './pages/admin/AdminProducts';
 import ProductForm from './pages/admin/ProductForm';
 import AdminBanners from './pages/admin/AdminBanners';
 import AdminCategories from './pages/admin/AdminCategories';
+import AdminPartners from './pages/admin/AdminPartners';
+import AdminSEO from './pages/admin/AdminSEO';
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -48,13 +50,15 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 };
 
 const App: React.FC = () => {
-  const { fetchProducts, fetchBanners, fetchCategories } = useStore();
+  const { fetchProducts, fetchBanners, fetchCategories, fetchPartners, fetchSEO } = useStore();
 
   useEffect(() => {
     fetchProducts();
     fetchBanners();
     fetchCategories();
-  }, [fetchProducts, fetchBanners, fetchCategories]);
+    fetchPartners();
+    fetchSEO();
+  }, [fetchProducts, fetchBanners, fetchCategories, fetchPartners, fetchSEO]);
 
   return (
     <HashRouter>
@@ -81,6 +85,8 @@ const App: React.FC = () => {
           <Route path="produtos/:id" element={<ProductForm />} />
           <Route path="categorias" element={<AdminCategories />} />
           <Route path="banners" element={<AdminBanners />} />
+          <Route path="partners" element={<AdminPartners />} />
+          <Route path="seo" element={<AdminSEO />} />
         </Route>
 
         {/* Fallback */}

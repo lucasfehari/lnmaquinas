@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Mail, Phone, MapPin, Clock, MessageSquare } from 'lucide-react';
 import { Section } from '../components/Layout';
+import { SEO } from '../components/SEO';
 import { CONTACT_INFO, UNIDADES } from '../constants';
 
 type FormData = {
@@ -36,6 +37,7 @@ const Contact: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEO page="contact" />
       <div className="bg-brand-darkGreen py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-heading font-bold text-white mb-4">Fale Conosco</h1>

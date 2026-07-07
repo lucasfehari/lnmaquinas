@@ -5,7 +5,8 @@ import { ArrowRight, ChevronRight, ChevronLeft } from 'lucide-react';
 import { Truck, ShieldCheck, CreditCard, Headphones, Tractor, GearSix, Cpu, Wrench } from '@phosphor-icons/react';
 import { Section } from '../components/Layout';
 import { ProductCard } from '../components/ProductCard';
-import { SERVICES } from '../constants';
+import { MOCK_PRODUCTS, COMPANY_NAME, ABOUT_TEXT, PARTNERS, UNIDADES, SERVICES } from '../constants';
+import { SEO } from '../components/SEO';
 import { useStore } from '../store';
 
 // --- Carousel Component ---
@@ -166,33 +167,11 @@ const FeaturesBar = () => (
 );
 
 // --- Partners Carousel ---
-const PartnersCarousel = () => {
-  return (
-    <div className="bg-white py-10 border-b border-gray-100 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 mb-6 text-center">
-        <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">Marcas e Parceiros</span>
-      </div>
-
-      <div className="relative w-full overflow-hidden group">
-        <div className="flex animate-marquee gap-12 items-center whitespace-nowrap min-w-full">
-          {/* Duplicate list to ensure seamless looping */}
-          {[...SERVICES, ...SERVICES, ...SERVICES].map((_, i) => ( // Using SERVICES as placeholder if constants not updated yet, will fix in next step to use PARTNERS
-            <div key={i} className="inline-block grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100 cursor-pointer">
-              {/* Placeholder logos - will be better with real images */}
-              <span className="text-2xl font-bold font-heading text-gray-300 hover:text-brand-green">PARCEIRO {i + 1}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// Fixed version using imported PARTNERS
-import { PARTNERS } from '../constants';
-import { div } from 'framer-motion/client';
-
 const MarqueePartners = () => {
+  const { partners } = useStore();
+
+  if (!partners || partners.length === 0) return null;
+
   return (
     <div className="bg-gray-50 py-10 border-b border-gray-200 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 mb-8 text-center">
@@ -203,10 +182,10 @@ const MarqueePartners = () => {
       <div className="relative w-full overflow-hidden group">
         <div className="flex animate-marquee gap-16 items-center whitespace-nowrap min-w-full">
           {/* Double the list to ensure seamless looping */}
-          {[...PARTNERS, ...PARTNERS, ...PARTNERS, ...PARTNERS].map((partner, idx) => (
-            <div key={idx} className="inline-flex items-center justify-center min-w-[150px] group-hover:grayscale-0 transition-all duration-300 filter grayscale opacity-70 hover:opacity-100">
+          {[...partners, ...partners, ...partners, ...partners].map((partner, idx) => (
+            <div key={`${partner.id}-${idx}`} className="inline-flex items-center justify-center min-w-[150px] group-hover:grayscale-0 transition-all duration-300 filter grayscale opacity-70 hover:opacity-100">
               <img
-                src={partner.logo}
+                src={partner.image_url}
                 alt={partner.name}
                 className="h-14 md:h-20 w-auto object-contain max-w-[180px]"
                 title={partner.name}
@@ -285,10 +264,13 @@ const CategoryGrid = () => {
 const Home: React.FC = () => {
   const { products } = useStore();
   // Use a slice of products for the showcase (using Store data)
+  const { banners, isLoading } = useStore();
+  const slides = banners.length > 0 ? banners : [];
   const featuredProducts = Array.isArray(products) ? products.slice(0, 4) : [];
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="flex flex-col min-h-screen">
+      <SEO page="home" />
       <HeroCarousel />
       <MarqueePartners />
       <FeaturesBar />

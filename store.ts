@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Product, Slide, Category } from './types';
+import { Product, Slide, Category, Partner, SEOSettings } from './types';
 import { INITIAL_SLIDES } from './constants';
 import { api } from '@/src/services/api';
 
@@ -35,6 +35,17 @@ interface AppState {
   fetchCategories: () => Promise<void>;
   addCategory: (name: string) => Promise<void>;
   deleteCategory: (id: number) => Promise<void>;
+
+  // Partner Actions
+  partners: Partner[];
+  fetchPartners: () => Promise<void>;
+  addPartner: (partner: Omit<Partner, 'id'>) => Promise<void>;
+  deletePartner: (id: number) => Promise<void>;
+
+  // SEO Actions
+  seoSettings: SEOSettings[];
+  fetchSEO: () => Promise<void>;
+  updateSEO: (seo: SEOSettings) => Promise<void>;
 }
 
 export const useStore = create<AppState>()(
@@ -175,6 +186,62 @@ export const useStore = create<AppState>()(
         } catch (error) {
           console.error('Error deleting category', error);
           alert('Erro ao deletar categoria');
+        }
+      },
+
+      // Partners
+      partners: [],
+      fetchPartners: async () => {
+        try {
+          const partners = await api.getPartners();
+          set({ partners });
+        } catch (error) {
+          console.error('Error fetching partners', error);
+        }
+      },
+      addPartner: async (partner) => {
+        try {
+          const newPartner = await api.addPartner(partner);
+          set(state => ({ partners: [...state.partners, newPartner] }));
+        } catch (error) {
+          console.error('Error adding partner', error);
+          alert('Erro ao adicionar parceiro');
+        }
+      },
+      deletePartner: async (id) => {
+        try {
+          await api.deletePartner(id);
+          set(state => ({ partners: state.partners.filter(p => p.id !== id) }));
+        } catch (error) {
+          console.error('Error deleting partner', error);
+          alert('Erro ao deletar parceiro');
+        }
+      },
+
+      // SEO
+      seoSettings: [],
+      fetchSEO: async () => {
+        try {
+          const seo = await api.getSEO() as SEOSettings[];
+          set({ seoSettings: Array.isArray(seo) ? seo : [] });
+        } catch (error) {
+          console.error('Error fetching SEO settings', error);
+        }
+      },
+      updateSEO: async (seo) => {
+        try {
+          await api.updateSEO(seo);
+          set(state => ({
+            seoSettings: state.seoSettings.map(s => s.page === seo.page ? { ...s, ...seo } : s)
+          }));
+          // If the page doesn't exist in local state, we should fetch all again to sync
+          const exists = get().seoSettings.find(s => s.page === seo.page);
+          if (!exists) {
+            await get().fetchSEO();
+          }
+        } catch (error) {
+          console.error('Error updating SEO', error);
+          alert('Erro ao atualizar SEO');
         }
       },
     }),
